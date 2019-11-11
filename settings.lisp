@@ -33,7 +33,7 @@
 (setf
  *message-window-gravity* :bottom-right
  *input-window-gravity* :center
- *mouse-focus-policy* :click)
+ *mouse-focus-policy* :sloppy)
 
 (defvar al/frames1 nil)
 
