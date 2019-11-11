@@ -39,69 +39,6 @@
 (in-package :stumpwm)
 
 
-;;; Keyboard layouts
-
-(defun al/layout-string (group)
-  "Convert xkb group (number) to a string suitable for the mode line."
-  ;; Layouts ("dvorak"/"йцукен"/"qwerty") are set by my Xorg config:
-  ;; <https://github.com/alezost/config/blob/master/X/xorg.conf/10-input.conf>.
-  (case group
-    (0 "dv")
-    (1 "ru")
-    (2 "qw")))
-
-(defun al/current-layout (&optional (display *display*))
-  "Return current keyboard layout."
-  (xlib:device-state-locked-group (xlib:get-state display)))
-
-(defun al/window-layout (window)
-  "Return keyboard layout of a specified WINDOW."
-  (getf (xlib:window-plist (window-xwin window))
-        :keyboard-layout))
-
-(defun al/set-display-layout (group &optional (display *display*))
-  "Set keyboard layout to a specified GROUP."
-  (xlib:lock-group display :group group)
-  (xlib:display-finish-output display))
-
-(defun al/update-window-layout (window previous-window)
-  "Update keyboard layout when switching from PREVIOUS-WINDOW to WINDOW."
-  (let ((current-layout (al/current-layout)))
-    (when previous-window
-      (setf (getf (xlib:window-plist (window-xwin previous-window))
-                  :keyboard-layout)
-            current-layout)
-      (when window
-        (let ((window-layout (al/window-layout window)))
-          (when (and window-layout
-                     (not (equal current-layout window-layout)))
-            (al/set-display-layout window-layout)))))))
-
-(defun al/update-group-layout (group previous-group)
-  "Update keyboard layout when switching from PREVIOUS-GROUP to GROUP."
-  (al/update-window-layout (group-current-window group)
-                           (group-current-window previous-group)))
-
-(defcommand al/enable-per-window-layout () ()
-  "Enable changing keyboard layouts per window."
-  (add-hook *focus-window-hook* 'al/update-window-layout)
-  (add-hook *focus-group-hook*  'al/update-group-layout))
-
-(defcommand al/disable-per-window-layout () ()
-  "Disable changing keyboard layouts per window."
-  (remove-hook *focus-window-hook* 'al/update-window-layout)
-  (remove-hook *focus-group-hook*  'al/update-group-layout))
-
-(defcommand al/set-layout (group &optional key)
-    ((:number "Layout number: ") :key)
-  "Set keyboard layout to a specified xkb GROUP.
-If current window is emacs, send a key sequence KEY to it (if specified)."
-  (when (and key (al/emacs-window-p))
-    (setq group 0)
-    (al/send-key key))
-  (al/set-display-layout group))
-
-
 ;;; Mod locks (CapsLock, NumLock, etc.)
 
 ;; These constants were found experimentally (I didn't bother to find

@@ -68,17 +68,6 @@
                  populatep))
 
 
-;;; Keyboard layouts
-
-;; This is needed because stumpwm opens display before extension
-;; definition.
-(xlib::initialize-extensions *display*)
-(xlib:enable-xkeyboard *display*)
-
-(al/set-display-layout 0)
-(al/enable-per-window-layout)
-
-
 ;;; Message after a part of key sequence
 
 ;; Idea and code came from `which-key-mode' command and
