@@ -130,24 +130,6 @@
       ""))
 
 
-;;; mode-line keyboard
-
-(defun al/ml-locks ()
-  (defun bool->color (bool)
-    (if bool "^B^2" ""))
-  (let ((mods (xlib:device-state-locked-mods
-               (xlib:get-state *display*))))
-    (al/ml-separate
-     (format nil "^[~ACaps^] ^[~ANum^]"
-             (bool->color (al/mod-lock-state +caps-lock+ mods))
-             (bool->color (al/mod-lock-state +num-lock+ mods))))))
-
-(defun al/ml-layout ()
-  (al/ml-separate
-   (format nil "^[^7*~A^]"
-           (al/layout-string (al/current-layout)))))
-
-
 ;;; Visual appearance and mode-line settings
 
 (setf
@@ -167,8 +149,6 @@
    (:eval (al/ml-net))
    (:eval (al/ml-battery-maybe))
    "^>"
-   (:eval (al/ml-layout))
-   (:eval (al/ml-locks))))
 
 (al/mode-line-on)
 
