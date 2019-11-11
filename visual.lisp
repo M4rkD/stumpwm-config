@@ -130,6 +130,19 @@
       ""))
 
 
+;;; Wallpaper
+
+(defvar *background-image-path* "/home/mark/Pictures/wallpapers/")
+
+(defun select-random-background-image ()
+  "Select a random image"
+  (let ((file-list (directory (concatenate 'string *background-image-path* "*.png")))
+        (*random-state* (make-random-state t)))
+    (namestring (nth (random (length file-list)) file-list))))
+
+(run-shell-command (concatenate 'string "display -window root " (select-random-background-image)))
+
+
 ;;; Mouse
 
 ;; set the mouse to be a left pointer (rather than an x)

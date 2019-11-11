@@ -32,10 +32,8 @@
                      :style swank:*communication-style*
                      :dont-close t)
 
-
-;;; Wallpaper
-
-(run-shell-command "feh --bg-centre /usr/share/backgrounds/warty-final-ubuntu.png")
+                       :style swank:*communication-style*
+                       :dont-close t)
 
 
 ;;; Current display number
