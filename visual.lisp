@@ -130,6 +130,12 @@
       ""))
 
 
+;;; Mouse
+
+;; set the mouse to be a left pointer (rather than an x)
+(run-shell-command "xsetroot -cursor_name left_ptr")
+
+
 ;;; Visual appearance and mode-line settings
 
 (setf
