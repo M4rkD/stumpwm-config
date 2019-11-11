@@ -1,4 +1,4 @@
-;;; keys.lisp --- Key bindings (Dvorak layout)
+;;; keys.lisp --- Key bindings
 
 ;; Copyright © 2013–2019 Alex Kost <alezost@gmail.com>
 
@@ -302,7 +302,6 @@ additional key."
 (al/define-key *al/web-map* "g"  "al/browse-show https://github.com/notifications")
 (al/define-key *al/web-map* "y"  "al/browse-show https://www.youtube.com/feed/subscriptions")
 (al/define-key *al/web-map* "z"  "al/browse-show zeus")
-(al/define-key *al/web-map* "t"  "al/browse-show http://tv.yandex.ru/4/?period=all-day")
 (al/define-key *al/web-map* "M"  "al/browse-show https://maps.google.com/maps?hl=ru")
 (al/define-key *al/web-map* "W"  "al/browse-show http://www.gismeteo.ru/city/hourly/5039/")
 (al/define-key *al/web-map* "w" '*al/web-wiki-map*)
