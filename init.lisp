@@ -33,6 +33,13 @@
                      :dont-close t)
 
 
+;;; Wallpaper
+
+(run-shell-command "feh --bg-centre /usr/share/backgrounds/warty-final-ubuntu.png")
+
+
+;;; Current display number
+
 (defvar al/display-number
   (multiple-value-bind (_ array)
       (cl-ppcre:scan-to-strings ":([0-9]+)" (getenv "DISPLAY"))
