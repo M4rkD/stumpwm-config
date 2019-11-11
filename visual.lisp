@@ -139,16 +139,22 @@
  *time-format-string-default*
  (format nil "^5*%H:%M:%S~%^2*%A~%^7*%d %B")
 
- *time-modeline-string* "%k:%M"
+ *time-modeline-string* "%a%d %b  -  %k:%M"
+
  *mode-line-timeout* 3
+
+ *mode-line-position* :bottom
+
  *screen-mode-line-format*
- '("^[^5*%d^]"                  ; time
+ '(
    " ^[^2*%n^]"                 ; group name
    (:eval (al/ml-cpu))
    (:eval (al/ml-thermal-zones-maybe))
    (:eval (al/ml-net))
    (:eval (al/ml-battery-maybe))
    "^>"
+   "[^[^5*%d^]]"
+))
 
 (al/mode-line-on)
 
