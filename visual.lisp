@@ -166,7 +166,7 @@
 
  *screen-mode-line-format*
  '(
-   " ^[^2*%n^]"                 ; group name
+   ;; " ^[^2*%n^]"                 ; group name
    (:eval (al/ml-cpu))
    (:eval (al/ml-thermal-zones-maybe))
    (:eval (al/ml-net))
