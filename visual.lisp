@@ -87,6 +87,15 @@
 (load-module "wifi")
 
 
+;;; Set fonts
+
+(ql:quickload "clx-truetype")
+(load-module "ttf-fonts")
+;; note: make sure this is a TTF font in xtf:*font-dirs* in a subdir TTF
+;; run (xft:cache-fonts) if not found.
+(set-font (make-instance 'xft:font :family "Source Code Pro" :subfamily "Regular" :size 20))
+
+
 ;;; Visual appearance and mode-line settings
 
 (defvar ml-separator " | ")
