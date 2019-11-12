@@ -26,12 +26,12 @@
 
 ;;; Start swank server
 (require :swank)
-(swank-loader:init)
+(swank-loader:init
+ :delete nil         ; delete any existing SWANK packages
+ :reload nil         ; reload SWANK, even if the SWANK package already exists
+ :load-contribs nil) ; load all contribs
 
 (swank:create-server :port 4004
-                     :style swank:*communication-style*
-                     :dont-close t)
-
                        :style swank:*communication-style*
                        :dont-close t)
 
