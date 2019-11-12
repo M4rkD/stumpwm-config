@@ -82,7 +82,6 @@ instead of any error."
 
 (al/load "keys")
 (al/load "utils")
-                                        ; ;; (al/load "xkb") ;; xlib functions missing here
 (al/load "sound")
 (al/load "settings")
 (al/load "visual")
