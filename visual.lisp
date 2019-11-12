@@ -79,6 +79,12 @@
 (run-shell-command "xsetroot -cursor_name left_ptr")
 
 
+;;; Notifications
+; Implements =org.freedesktop.Notifications= interface.
+
+(load-module "notify")
+(notify:notify-server-toggle)
+
 ;;; Load mode-line modules
 
 (load-module "battery-portable")
