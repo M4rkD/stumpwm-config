@@ -87,3 +87,6 @@ instead of any error."
 (al/load "visual")
 
 ;;; init.lisp ends here
+
+
+;; toggle the mode line with  (stumpwm:mode-line) or command mode-line
