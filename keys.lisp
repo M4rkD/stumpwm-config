@@ -61,6 +61,25 @@ additional key."
       (dk add-key fun-key))))
 
 
+;;; Application shortcuts
+(defcommand web () ()
+  "run firefox"
+  (run-or-raise "firefox" '(:class "Firefox")))
+
+(defcommand emacs () ()
+  "run firefox"
+  (run-or-raise "emacs" '(:class "Emacs")))
+
+(defcommand terminal () ()
+  "run firefox"
+  (run-or-raise "gnome-terminal" '(:class "Gnome-terminal")))
+
+;; (show-window-properties) is a useful command for showing window class
+
+(al/define-key *top-map* "s-e"   "emacs")
+(al/define-key *top-map* "s-w"   "web")
+
+
 ;;; Managing windows, frames & groups
 
 (al/define-key *root-map* "F"   "fselect")
@@ -71,7 +90,6 @@ additional key."
 (al/define-key *root-map* "M-o" "fnext")
 
 (al/define-key *top-map* "s-r"   "al/toggle-root")
-(al/define-key *top-map* "s-w"   "windowlist")
 (al/define-key *top-map* "M-s-w" "vgroups")
 (al/define-key *top-map* "M-s-g" "grouplist")
 (al/define-key *top-map* "H-o"   "al/other H-o")
