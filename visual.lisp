@@ -60,76 +60,6 @@
  *grab-pointer-background* (hex-to-xlib-color "#2c53ca"))
 
 
-;;; mode-line auxiliary code
-
-(defvar al/ml-separator " | ")
-
-(defun al/ml-separate (str)
-  "Concatenate `al/ml-separator' and STR."
-  (concat al/ml-separator str))
-
-
-;;; mode-line cpu
-
-(al/load "mode-line-cpu")
-
-(defvar al/cpu-refresh-time 3)
-
-(al/defun-with-delay
- al/cpu-refresh-time al/ml-cpu ()
- (al/ml-separate (al/stumpwm-cpu:cpu-mode-line-string)))
-
-
-;;; mode-line thermal
-
-(al/load "mode-line-thermal")
-
-(defvar al/thermal-zone
-  (car (al/stumpwm-thermal:all-thermal-zones)))
-
-(defvar al/thermal-zones-refresh-time 6)
-
-(al/defun-with-delay
- al/thermal-zones-refresh-time al/ml-thermal-zones ()
- (al/ml-separate
-  (al/stumpwm-thermal:thermal-zones-mode-line-string al/thermal-zone)))
-
-(defun al/ml-thermal-zones-maybe ()
-  (if al/thermal-zone
-      (al/ml-thermal-zones)
-      ""))
-
-
-;;; mode-line net
-
-(al/load "mode-line-net")
-
-(defvar al/net-refresh-time 6)
-
-(al/defun-with-delay
- al/net-refresh-time al/ml-net ()
- (al/ml-separate (al/stumpwm-net:net-mode-line-string)))
-
-
-;;; mode-line battery
-
-(al/load "mode-line-battery")
-
-(defvar al/battery (car (al/stumpwm-battery:all-batteries)))
-
-(defvar al/battery-refresh-time 60)
-
-(al/defun-with-delay
- al/battery-refresh-time al/ml-battery ()
- (al/ml-separate
-  (al/stumpwm-battery:battery-mode-line-string al/battery)))
-
-(defun al/ml-battery-maybe ()
-  (if al/battery
-      (al/ml-battery)
-      ""))
-
-
 ;;; Wallpaper
 
 (defvar *background-image-path* "/home/mark/Pictures/wallpapers/")
@@ -149,7 +79,17 @@
 (run-shell-command "xsetroot -cursor_name left_ptr")
 
 
+;;; Load mode-line modules
+
+(load-module "battery-portable")
+(load-module "cpu")
+(load-module "net")
+(load-module "wifi")
+
+
 ;;; Visual appearance and mode-line settings
+
+(defvar ml-separator " | ")
 
 (setf
  *window-info-format*
@@ -158,7 +98,7 @@
  *time-format-string-default*
  (format nil "^5*%H:%M:%S~%^2*%A~%^7*%d %B")
 
- *time-modeline-string* "%a%d %b  -  %k:%M"
+ *time-modeline-string* "%a %d %b |%k:%M"
 
  *mode-line-timeout* 3
 
@@ -167,20 +107,18 @@
  *screen-mode-line-format*
  '(
    ;; " ^[^2*%n^]"                 ; group name
-   (:eval (al/ml-cpu))
-   (:eval (al/ml-thermal-zones-maybe))
-   (:eval (al/ml-net))
-   (:eval (al/ml-battery-maybe))
+   "%B" ;; Show state of batteries
+   ml-separator
+   "%C"
+   ml-separator
+   "%l"
+   ml-separator
+   "%I"
+   ml-separator
    "^>"
-   "[^[^5*%d^]]"
+   "^[^5*%d^]"
 ))
 
-(al/mode-line-on)
-
-(ql:quickload "clx-truetype")
-(load-module "ttf-fonts")
-;; note: make sure this is a TTF font in xtf:*font-dirs* in a subdir TTF
-;; run (xft:cache-fonts) if not found.
-(set-font (make-instance 'xft:font :family "Source Code Pro" :subfamily "Regular" :size 20))
+(mode-line)
 
 ;;; visual.lisp ends here
