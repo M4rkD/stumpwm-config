@@ -78,7 +78,7 @@ instead of any error."
 
 (set-module-dir
  (pathname-as-directory (concat (getenv "HOME")
-                                "/src/stumpwm-contrib")))
+                                "/.stumpwm-config/stumpwm-contrib")))
 
 (al/load "keys")
 (al/load "utils")
